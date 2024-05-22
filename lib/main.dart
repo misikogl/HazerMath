@@ -54,65 +54,55 @@ class HomePage extends StatelessWidget {
                   const SizedBox(height: 10),
                   SeviyeButonu(
                     text: 'Seviye I',
-                    onPressed: () async {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const CustomMathInputScreen(),
-                      ));
-                    },
-                    textStyle: GoogleFonts.pacifico(),
+                    onPressed: () =>
+                        _navigateTo(context, const CustomMathInputScreen()),
                   ),
                   const SizedBox(height: 20),
                   SeviyeButonu(
                     text: 'Seviye II',
                     onPressed: () {},
-                    textStyle: GoogleFonts.pacifico(),
                   ),
                   const SizedBox(height: 20),
                   SeviyeButonu(
                     text: 'Seviye III',
                     onPressed: () {},
-                    textStyle: GoogleFonts.pacifico(),
                   ),
                   const SizedBox(height: 20),
                   SeviyeButonu(
                     text: 'Seviye IV',
                     onPressed: () {},
-                    textStyle: GoogleFonts.pacifico(),
                   ),
                 ],
               ),
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).padding.top +
-                5, // Durum çubuğunun hemen altı
+            top: MediaQuery.of(context).padding.top + 5,
             right: 10,
             child: IconButton(
               icon: const Icon(Icons.settings,
                   color: Color.fromRGBO(254, 255, 213, 1)),
-              onPressed: () async {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const SettingspageWidget(),
-                ));
-              },
+              onPressed: () => _navigateTo(context, const SettingspageWidget()),
             ),
           ),
         ],
       ),
     );
   }
+
+  void _navigateTo(BuildContext context, Widget page) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => page));
+  }
 }
 
 class SeviyeButonu extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
-  final TextStyle textStyle;
 
   const SeviyeButonu({
     super.key,
     required this.text,
     required this.onPressed,
-    required this.textStyle,
   });
 
   @override
@@ -128,8 +118,12 @@ class SeviyeButonu extends StatelessWidget {
       onPressed: onPressed,
       child: Text(
         text,
-        style: textStyle.copyWith(
-            fontSize: 21, color: const Color.fromRGBO(254, 255, 213, 1)),
+        style: GoogleFonts.pacifico(
+          textStyle: const TextStyle(
+            fontSize: 21,
+            color: Color.fromRGBO(254, 255, 213, 1),
+          ),
+        ),
       ),
     );
   }
