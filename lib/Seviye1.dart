@@ -31,10 +31,10 @@ class _CustomMathInputScreenState extends State<CustomMathInputScreen> {
   ];
 
   final List<String> _problems = [
-    'X ve Y sayılarının toplamı nedir?',
-    'X sayısından Y sayısını çıkarırsak sonuç ne olur?',
-    'X sayısı ile Y sayısının çarpımı kaç eder?',
-    'X sayısı Y sayısına bölünürse sonuç kaç olur?'
+    'Ahmetin X kadar elması vardır. Manavdan Y tane daha elma almıştır. Ahmetin toplam kaç tane elması olmuştur?',
+    'X tane balık tutan Mert, Y tanesini yemiştir. Kaç balığı kalmıştır?',
+    'Niyazinin X tane kalemi vardır. Annesi Niyaziye Y katı kadar daha kalem almıştır. Son durumda Niyazinin kaç kalemi vardır?',
+    'Emine X tane ekmeği Y parçaya bölmüştür. Kaç tane ekmek parçası elde etmiştir?'
   ];
 
   void _onPressed(String value) {
@@ -178,13 +178,13 @@ class _CustomMathInputScreenState extends State<CustomMathInputScreen> {
 
   String _selectProblemBasedOnOperator() {
     if (_currentInput.contains('+')) {
-      return 'X ve Y sayılarının toplamı nedir?';
+      return 'Ahmetin X kadar elması vardır. Manavdan Y tane daha elma almıştır. Ahmetin toplam kaç tane elması olmuştur?';
     } else if (_currentInput.contains('-')) {
-      return 'X sayısından Y sayısını çıkarırsak sonuç ne olur?';
+      return "X tane balık tutan Mert, Y tanesini yemiştir. Kaç balığı kalmıştır?";
     } else if (_currentInput.contains('*')) {
-      return 'X sayısı ile Y sayısının çarpımı kaç eder?';
+      return "Niyazi'nin X tane kalemi vardır. Annesi Niyazi'ye Y katı kadar daha kalem almıştır. Son durumda Niyazi'nin kaç kalemi vardır?";
     } else if (_currentInput.contains('/')) {
-      return 'X sayısı Y sayısına bölünürse sonuç kaç olur?';
+      return "Emine X tane ekmeği Y parçaya bölmüştür. Kaç tane ekmek parçası elde etmiştir?";
     }
     return ''; // Eğer hiçbir operatör bulunamazsa boş string döndür.
   }
@@ -269,10 +269,10 @@ class _ShowProblemScreenState extends State<ShowProblemScreen> {
 
   void _checkAnswer() {
     String correctAnswer = _calculateAnswer(widget.problem, widget.numbers);
-    double userAnswer = double.tryParse(_answerController.text) ?? 0;
-    double correctAnswerDouble = double.tryParse(correctAnswer) ?? 0;
+    double userAnswer = double.tryParse(_answerController.text) ?? 0.0;
+    double correctAnswerDouble = double.tryParse(correctAnswer) ?? 0.0;
 
-    // Tolerans değeri olarak 0.01 kullanıyoruz
+    // Eşitlik kontrolü için bir tolerans değeri kullanılıyor
     if ((userAnswer - correctAnswerDouble).abs() < 0.01) {
       _showResultDialog(true);
     } else {
@@ -285,20 +285,19 @@ class _ShowProblemScreenState extends State<ShowProblemScreen> {
     double y = double.parse(numbers[1]);
     double result;
 
-    if (problem.contains('toplamı')) {
+    if (problem.contains('toplam')) {
       result = x + y;
-    } else if (problem.contains('çıkarırsak')) {
+    } else if (problem.contains('kalmıştır')) {
       result = x - y;
-    } else if (problem.contains('çarpımı')) {
+    } else if (problem.contains('katı')) {
       result = x * y;
-    } else if (problem.contains('bölünürse')) {
+    } else if (problem.contains('bölmüştür')) {
       result = x / y;
     } else {
-      result = 0;
+      result = 0.0;
     }
 
-    return result.toStringAsFixed(
-        2); // Cevapları iki ondalık basamakla sınırlayabilirsiniz.
+    return result.toStringAsFixed(2);
   }
 
   void _showResultDialog(bool isCorrect) {

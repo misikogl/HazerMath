@@ -49,10 +49,9 @@ class _ShowProblemScreenState extends State<ShowProblemScreen> {
 
   void _checkAnswer() {
     String correctAnswer = _calculateAnswer(widget.problem, widget.numbers);
-    double userAnswer = double.tryParse(_answerController.text) ?? 0;
-    double correctAnswerDouble = double.tryParse(correctAnswer) ?? 0;
+    double userAnswer = double.tryParse(_answerController.text) ?? 0.0;
+    double correctAnswerDouble = double.tryParse(correctAnswer) ?? 0.0;
 
-    // Tolerans değeri olarak 0.01 kullanıyoruz
     if ((userAnswer - correctAnswerDouble).abs() < 0.01) {
       _showResultDialog(true);
     } else {
@@ -65,20 +64,19 @@ class _ShowProblemScreenState extends State<ShowProblemScreen> {
     double y = double.parse(numbers[1]);
     double result;
 
-    if (problem.contains('toplamı')) {
+    if (problem.contains('toplam')) {
       result = x + y;
-    } else if (problem.contains('çıkarırsak')) {
+    } else if (problem.contains('kalmıştır')) {
       result = x - y;
-    } else if (problem.contains('çarpımı')) {
+    } else if (problem.contains('katı')) {
       result = x * y;
-    } else if (problem.contains('bölünürse')) {
+    } else if (problem.contains('bölmüştür')) {
       result = x / y;
     } else {
-      result = 0;
+      result = 0.0;
     }
 
-    return result.toStringAsFixed(
-        2); // Cevapları iki ondalık basamakla sınırlayabilirsiniz.
+    return result.toStringAsFixed(2);
   }
 
   void _showResultDialog(bool isCorrect) {
